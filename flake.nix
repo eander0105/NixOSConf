@@ -2,7 +2,7 @@
   description = "eander0105 nix configuration flake";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
   outputs = { self, nixpkgs, ... } : 
@@ -10,9 +10,9 @@
     lib = nixpkgs.lib;
   in {
     nixosConfigurations = {
-      emil = {
+      emil = lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ "./configuration.nix" ];
+        modules = [ ./configuration.nix ];
       };
     };
   };

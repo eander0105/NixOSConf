@@ -107,6 +107,8 @@
     chromium
     vscode
 
+    cowsay
+
     bottles
 
     # Personal program
