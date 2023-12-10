@@ -13,6 +13,7 @@
         gnomeExtensions.appindicator
         gnomeExtensions.gsconnect
         gnomeExtensions.workspace-matrix
+        gnomeExtensions.auto-move-windows
       ];
 
       gnome.excludePackages = (with pkgs; [

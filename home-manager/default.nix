@@ -9,13 +9,15 @@
 
 {
   imports = [
-    # ../modules/home-manager/gnome
+    ../modules/home-manager/gnome
   ];
 
-  # nixpkgs.config = {
-  #   allowUnfree = true;
-  #   allowUnfreePredicate = _: true;
-  # };
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = _: true;
+  };
+
+
 
   # programs.home-manager.enable = true;
   # programs.git.enable = true;

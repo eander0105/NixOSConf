@@ -38,16 +38,33 @@ in{
         background-transparency-percent = 10;
       };
       "org/gnome/settings-daemon/plugins/color" = {
-        night-light-enabled = true;
-        night-light-temperature = "uint32 3000";
-        night-light-schedule-automatic = false;
-        night-light-schedule-from = 0.0;
-        night-light-schedule-to = 0.0;
+        night-light-enabled = false;
+        # night-light-temperature = "uint32 3000";
+        # night-light-schedule-automatic = false;
+        # night-light-schedule-from = 0.0;
+        # night-light-schedule-to = 0.0;
       };
       "org/gnome/mutter" = {
         workspaces-only-on-primary = true;
         dynamic-workspaces = true;
         edge-tiling = true;
+      };
+      "org/gnome/shell/extensions/auto-move-windows" = {
+        enable = true;
+      };
+
+      "org/gnome/shell" = {
+        disable-user-extensions = false;
+        enabled-extensions = [
+          "gsconnect@andyholmes.github.io"
+          "wsmatrix@martin.zurowietz.de"
+        ];
+      };
+      "org/gnome/desktop/interface" = {
+        gtk-theme = "Adwaita-dark";
+      };
+      "org/gnome/settings-daemon/plugins/media-keys" = {
+        # screensaver = [ "<Shift><Control><Super>l" ];
       };
     };
   };
