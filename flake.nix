@@ -5,6 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -13,11 +14,13 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
+    nixos-hardware,
     flake-utils,
     home-manager,
     ...
-  }@inputs :
+  } @ inputs :
   let
+    inherit (self) outputs;
     forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
     lib = nixpkgs.lib;
   in rec {
@@ -28,12 +31,20 @@
       }
     );
 
-    nixosConfigurations = {
-      lillagron = lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [ ./nixos/lillagron ];
+    nixosModules = import ./modules/nixos;
+    homeManagerModules = import ./modules/home-manager;
+
+    nixosConfigurations =
+      let
+        specialArgs = { inherit inputs outputs; };
+      in{
+        lillagron = lib.nixosSystem {
+          inherit specialArgs;
+          system = "x86_64-linux";
+          modules = [ ./nixos/lillagron ];
+        };
       };
-    };
-    # formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+
+    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
   };
 }

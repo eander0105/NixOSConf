@@ -1,15 +1,13 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ inputs, config, pkgs, ... }:
+{ inputs, outputs, config, pkgs, ... } :
 
 {
   imports = [
-    # inputs.nixos-hardware.nixosModules.common-cpu-amd
-    # inputs.nixos-hardware.nixosModules.common-gpu-amd
+    inputs.nixos-hardware.nixosModules.common-cpu-amd
+    inputs.nixos-hardware.nixosModules.common-gpu-amd
+    inputs.home-manager.nixosModules.home-manager
     ./hardware-configuration.nix
-    # ../../modules/nixos/UI/gnome.nix
+    ../../modules/nixos/UI/gnome.nix
+    ./home.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -30,33 +28,6 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  /* environment = {
-    gnome.excludePackages = with pkgs.gnome; [
-      cheese # webcam tool
-      gedit # text editor
-      epiphany # web browser
-      geary # email reader
-      evince # document viewer
-      totem # video player
-      # pkgs.gnome-console
-      # pkgs.gnome-connections
-      gnome-contacts
-      gnome-maps
-      gnome-music
-      gnome-weather
-    ];
-  }; */
-  
-  services.xserver = {
-    displayManager.gdm = {
-      enable = true;
-      settings.greeter.includeAll = true;
-    };
-    desktopManager.gnome.enable = true;
-    layout = "se";
-    # xkbVariant = "";
-  };
-
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -65,6 +36,18 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_ALL = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
+  };
 
   # Configure console keymap
   console.keyMap = "sv-latin1";
@@ -72,29 +55,12 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
   users.users.emil = {
     initialPassword = "qwerty";
     isNormalUser = true;
     description = "Emil Andersson";
     extraGroups = [ "networkmanager" "wheel" "input" "audio" "docker" ];
-    packages = with pkgs; [
-      firefox
-    ];
+    packages = with pkgs; [ ];
   };
 
   # Allow unfree packages
@@ -107,16 +73,8 @@
     vim
     tmux
     wget
-    chromium
-    vscode
-    # kitty
-    # Personal program
-    
-    spotify
-
-    #gnomeExtensions.appindicator
-    #gnomeExtensions.gsconnect
-    #gnomeExtensions.workspace-matrix
+    kitty
+    dconf
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
