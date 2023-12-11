@@ -4,17 +4,23 @@
     environment = {
 
       systemPackages = with pkgs; [
+        # General pkgs
         firefox
         chromium
         vscode
         spotify
         wl-clipboard
+
+        # Gnome pkgs
+        gnome.gnome-tweaks
         gnome.adwaita-icon-theme
         gnomeExtensions.appindicator
         gnomeExtensions.gsconnect
         gnomeExtensions.workspace-matrix
         gnomeExtensions.auto-move-windows
         gnomeExtensions.unite
+        gnomeExtensions.caffeine
+        gnomeExtensions.dash-to-dock
       ];
 
       gnome.excludePackages = (with pkgs; [
@@ -38,8 +44,6 @@
     };
 
     programs.gnome-terminal.enable = true;
-
-    programs.zsh.vteIntegration = true;
 
     programs.kdeconnect = {
       enable = true;
