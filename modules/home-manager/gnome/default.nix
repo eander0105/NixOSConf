@@ -5,17 +5,9 @@ let
 in{
   config = {
     fonts.fontconfig.enable = true;
-    # home.packages = [ cfg.font.package ];
     dconf.settings = {
-      # "org/gnome/desktop/peripherals/trackball" = {
-      #   scroll-wheel-emulation-button = 8;
-      #   middle-click-emulation = true;
-      # };
-      "org/gnome/desktop/sound".event-sounds = false;
-      "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
-        # monospace-font-name = cfg.font.name;
-      };
+
+      # idk ¯\_(·-·)_/¯
       "org/gnome/terminal/legacy" = {
         theme-variant = "dark";
       };
@@ -24,47 +16,68 @@ in{
         list = [ profileUUID ];
       };
       "org/gnome/terminal/legacy/profiles:/:${profileUUID}" = {
-        # visible-name = "Oceanic Next";
         audible-bell = false;
-        # font = "${cfg.font.name} ${builtins.toString cfg.font.size}";
-        # use-system-font = false;
-        # use-theme-colors = false;
-        # background-color = colors.primary.background;
-        # foreground-color = colors.primary.foreground;
-        # bold-color = colors.primary.foreground;
         bold-color-same-as-fg = true;
-        # inherit (colors) palette;
         use-transparent-background = true;
         background-transparency-percent = 10;
       };
-      "org/gnome/settings-daemon/plugins/color" = {
-        night-light-enabled = false;
-        # night-light-temperature = "uint32 3000";
-        # night-light-schedule-automatic = false;
-        # night-light-schedule-from = 0.0;
-        # night-light-schedule-to = 0.0;
+
+      # Generall settings
+      "org/gnome/desktop/peripherals/mouse".accel-profile = "flat";
+      "org/gnome/settings-daemon/plugins/color".night-light-enabled = false;
+      "org/gnome/desktop/sound".event-sounds = false;
+      "org/gnome/desktop/wm/preferences".num-workspaces = 6;
+      "org/gnome/shell/app-switcher".current-workspace-only = false;
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+        enable-hot-corners = false;
+        gtk-theme = "Adwaita-dark";
       };
       "org/gnome/mutter" = {
         workspaces-only-on-primary = true;
         dynamic-workspaces = true;
         edge-tiling = true;
       };
-      "org/gnome/shell/extensions/auto-move-windows" = {
-        enable = true;
+      "org/gnome/settings-daemon/plugins/power" = {
+        sleep-inactive-ac-timeout = 3600;
       };
 
+
+      # Extensions
       "org/gnome/shell" = {
         disable-user-extensions = false;
         enabled-extensions = [
           "gsconnect@andyholmes.github.io"
           "wsmatrix@martin.zurowietz.de"
+          "gsconnect@andyholmes.github.io"
+          "wsmatrix@martin.zurowietz.de"
+          "drive-menu@gnome-shell-extensions.gcampax.github.com"
+          "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
+          "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
         ];
       };
-      "org/gnome/desktop/interface" = {
-        gtk-theme = "Adwaita-dark";
+      "org/gnome/shell/extensions/auto-move-windows" = {
+        enable = true;
+        application-list=[ "code.desktop:2" "spotify.desktop:6" ];
       };
+      "org/gnome/shell/extensions/wsmatrix" = {
+        multi-monitor = false;
+        num-columns = 3;
+        popup-timeout = 400;
+        scale = 0.25;
+        show-overview-grid = true;
+        show-thumbnails=true;
+        show-workspace-names=false;
+      };
+
+      # Keybinds
       "org/gnome/settings-daemon/plugins/media-keys" = {
-        # screensaver = [ "<Shift><Control><Super>l" ];
+        custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" ];
+      };
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+        binding = "<Control><Alt>t";
+        command = "kitty";
+        name = "Terminal (kitty)";
       };
     };
   };
