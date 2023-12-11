@@ -9,9 +9,9 @@
       };
     };
 
-    # Abstract out to modules/home-manger/git
   };
 
+  # Abstract out to modules/home-manger/git
   ## TODO: make this work =)
   # programs.git = {
   #   enable = true;
