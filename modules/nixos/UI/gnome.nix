@@ -14,6 +14,7 @@
         gnomeExtensions.gsconnect
         gnomeExtensions.workspace-matrix
         gnomeExtensions.auto-move-windows
+        gnomeExtensions.unite
       ];
 
       gnome.excludePackages = (with pkgs; [
