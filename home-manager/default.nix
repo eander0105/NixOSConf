@@ -11,6 +11,7 @@
   imports = [
     ../modules/home-manager/gnome
     ../modules/home-manager/git.nix
+    ../modules/home-manager/tmux.nix
   ];
 
   nixpkgs.config = {
