@@ -18,8 +18,7 @@
     allowUnfreePredicate = _: true;
   };
 
-  # programs.home-manager.enable = true;
-  # programs.git.enable = true;
+  programs.home-manager.enable = true;
 
   home.stateVersion = "23.11";
 }
