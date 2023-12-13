@@ -65,9 +65,22 @@
     };
 
     # services.udev.packages = [ pkgs.gnome.gnome-settings-daemon ];
-    
+    systemd.tmpfiles.rules = [
+      "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+    ];
+
+    hardware.opengl = {
+      driSupport = true;# This is already enabled by default
+      driSupport32Bit = true;# For 32 bit applications
+      extraPackages = with pkgs; [
+        amdvlk
+        driversi686Linux.amdvlk
+      ];
+    };
+
     services.xserver = {
       enable = true;
+      videoDrivers = [ "amdgpu" ];
       displayManager.gdm = {
         enable = true;
         settings.greeter.includeAll = true;
@@ -75,7 +88,6 @@
       desktopManager.gnome.enable = true;
       layout = "se";
       xkbVariant = "";
-      
     };
 
     sound.enable = true;

@@ -8,6 +8,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nix-gaming.url = "github:fufexan/nix-gaming";
   };
 
   outputs = {

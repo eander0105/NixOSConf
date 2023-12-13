@@ -10,8 +10,12 @@
     ./home.nix
   ];
 
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    substituters = ["https://nix-gaming.cachix.org"];
+    trusted-public-keys = ["nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="];
+  };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.gc = {
     automatic = true;
     dates = "weekly";
@@ -66,7 +70,13 @@
     isNormalUser = true;
     description = "Emil Andersson";
     extraGroups = [ "networkmanager" "wheel" "input" "audio" "docker" ];
-    packages = with pkgs; [ ];
+    packages = with pkgs; [ 
+      (wineWowPackages.full.override {
+        wineRelease = "staging";
+        mingwSupport = true;
+      })
+      winetricks
+    ];
   };
 
   # Allow unfree packages
@@ -81,7 +91,25 @@
     wget
     kitty
     dconf
+
+    webcord
+
+    jre8
+    jdk8
+    python3
+    nodejs
+
+    # Gaming
+    steam
+    lutris
+    prismlauncher # super duper minecraft launcher
+    wineWowPackages.stable
+    wineWowPackages.waylandFull
+    winetricks
+    inputs.nix-gaming.packages.${pkgs.hostPlatform.system}.wine-ge
   ];
+
+  programs.gamemode.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
