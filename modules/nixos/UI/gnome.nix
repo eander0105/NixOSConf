@@ -10,6 +10,7 @@
         vscode
         spotify
         wl-clipboard
+        mangohud
 
         # Gnome pkgs
         gnome.gnome-tweaks
