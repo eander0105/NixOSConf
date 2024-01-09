@@ -96,6 +96,7 @@
     wget
     kitty
     dconf
+    appimage-run
 
     webcord
 
