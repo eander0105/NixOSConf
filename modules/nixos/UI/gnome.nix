@@ -11,6 +11,7 @@
         spotify
         wl-clipboard
         mangohud
+        darktable
 
         # Gnome pkgs
         gnome.gnome-tweaks
