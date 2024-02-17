@@ -18,7 +18,7 @@
 
     extraConfig = ''
       # Easy config reload
-      bind-key R source-file ~/.tmux.conf \; display-message "tmux.conf reloaded."
+      # bind-key R source-file ~/.tmux.conf \; display-message "tmux.conf reloaded."
 
       # vi is good
       setw -g mode-keys vi
@@ -31,8 +31,10 @@
       bind-key L clear-history
 
       bind-key space next-window
+      bind-key -n M-left previous-window
+
       bind-key bspace previous-window
-      bind-key enter next-layout
+      bind-key -n M-right next-window
 
       set -ga terminal-overrides ",*256col*:Tc"
       set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
@@ -78,6 +80,25 @@
       unbind-key C-Right
 
       bind c new-window -c
+      bind -n C-t new-window -c
+
+      # statusbar
+      set -g status-position bottom
+      set -g status-justify left
+      set -g status-style 'fg=colour1'
+      set -g status-left ""
+      set -g status-right '%Y-%m-%d %H:%M '
+      set -g status-right-length 50
+      set -g status-left-length 10
+
+      setw -g window-status-current-style 'fg=colour0 bg=colour1 bold'
+      setw -g window-status-current-format ' #I #W #F '
+
+      setw -g window-status-style 'fg=colour1 dim'
+      setw -g window-status-format ' #I #[fg=colour7]#W #[fg=colour1]#F '
+
+      setw -g window-status-bell-style 'fg=colour2 bg=colour1 bold'
+
     '';
   };
 }
