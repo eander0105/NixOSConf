@@ -12,6 +12,8 @@
         wl-clipboard
         mangohud
         darktable
+        piper
+        freecad
 
         # Gnome pkgs
         gnome.gnome-tweaks
@@ -46,7 +48,6 @@
     };
 
     programs.gnome-terminal.enable = true;
-
     programs.kdeconnect = {
       enable = true;
       package = pkgs.gnomeExtensions.gsconnect;
@@ -67,6 +68,8 @@
     };
 
     # services.udev.packages = [ pkgs.gnome.gnome-settings-daemon ];
+    services.ratbagd.enable = true;
+
     systemd.tmpfiles.rules = [
       "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
     ];

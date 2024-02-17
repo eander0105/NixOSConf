@@ -104,6 +104,7 @@
     jdk8
     python3
     nodejs
+    docker
 
     # Gaming
     steam
