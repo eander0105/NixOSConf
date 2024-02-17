@@ -32,7 +32,7 @@
 
   # TODO: rename to "lillagron"
   networking = {
-    hostName = "nixos";
+    hostName = "lillagron";
     networkmanager.enable = true;
     extraHosts = ''
       127.0.0.1 nixos
