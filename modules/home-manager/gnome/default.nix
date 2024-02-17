@@ -84,7 +84,7 @@ in {
         max-alpha = 0.8;
         preferred-monitor = -2;
         preferred-monitor-by-connector = "DP-3";
-        pressure-threshold = 50.0;
+        pressure-threshold = 250.0;
         preview-size-scale = 0.0;
         running-indicator-dominant-color = false;
         running-indicator-style = "DOTS";
