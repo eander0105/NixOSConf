@@ -57,7 +57,7 @@ in {
           "caffeine@patapon.info"
           "unite@hardpixel.eu"
           "dash-to-dock@micxgx.gmail.com"
-          
+          "Resource_Monitor@Ory0n"
         ];
       };
       "org/gnome/shell/extensions/dash-to-dock" = {
@@ -138,11 +138,28 @@ in {
       "org/gnome/shell/extensions/wsmatrix" = {
         multi-monitor = false;
         num-columns = 3;
+        num-rows = 2;
         popup-timeout = 400;
         scale = 0.25;
         show-overview-grid = true;
         show-thumbnails=true;
         show-workspace-names=false;
+      };
+      "com/github/Ory0n/Resource_Monitor" = {
+        diskdeviceslist = ["devtmpfs /dev false false" "/dev/nvme0n1p2 / false false" "/dev/nvme0n1p1 /boot false false"];
+        diskspacestatus = false;
+        diskstatsstatus = false;
+        gpudisplaydevicename = true;
+        gpustatus = false;
+        itemsposition = ["cpu" "ram" "gpu" "swap" "stats" "space" "eth" "wlan"];
+        leftclickstatus = "gnome-system-monitor";
+        netautohidestatus = false;
+        netethstatus = false;
+        netwlanstatus = false;
+        swapstatus = false;
+        thermalcputemperaturedeviceslist = ["k10temp: Tctl-true-/sys/class/hwmon/hwmon3/temp1_input" "k10temp: Tccd1-true-/sys/class/hwmon/hwmon3/temp3_input"];
+        thermalcputemperaturestatus = true;
+        thermalgputemperaturestatus = false;
       };
 
       # Keybinds
