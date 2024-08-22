@@ -8,6 +8,5 @@
         emil = import ../../home-manager;
       };
     };
-
   };
 }

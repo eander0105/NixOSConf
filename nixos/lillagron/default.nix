@@ -28,6 +28,7 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
+    kernelPackages = pkgs.linuxPackages_6_6;
   };
 
   # TODO: rename to "lillagron"
@@ -91,25 +92,34 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     git
-    vim
     tmux
     wget
     kitty
     dconf
     appimage-run
 
-    webcord
+    vesktop
+    discord
+    armcord
 
     jre8
     jdk8
     python3
     nodejs
     docker
+    obs-studio
+    vlc
+
+    jellyfin
+    jellyfin-web
+    jellyfin-ffmpeg
 
     # Gaming
     steam
     lutris
     prismlauncher # super duper minecraft launcher
+    # proton-ge-bin
+
     wineWowPackages.stable
     wineWowPackages.waylandFull
     winetricks
@@ -117,6 +127,39 @@
   ];
 
   programs.gamemode.enable = true;
+
+  programs.steam = {
+    enable = true;
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+    ];
+  };
+
+  # programs.starship = {
+  #   enable = true;
+  # }
+
+  # programs.neovim = {
+  #   enable = true;
+  #   viAlias = true;
+  #   vimAlias = true;
+  #   vimdiffAlias = true;
+  #   plugins = with pkgs.vimPackages; [
+  #     nvim-lspconfig
+  #     neodev-nvim
+  #     nvim-cmp
+  #     comment-nvim
+  #     gruvbux-nvim
+  #   ]
+  # };
+
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -131,15 +174,25 @@
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
+  services.jellyfin = {
+    enable = true;
+    openFirewall = true;
+  };
+
+
   services.devmon.enable = true;
   services.gvfs.enable = true;
   services.udisks2.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 25565 ];
-  networking.firewall.allowedUDPPorts = [ 25565 ];
+  # 25565 is the default port for Minecraft.
+  # 3000 is the default port for Jellyfin.
+  networking.firewall.allowedTCPPorts = [ 25565 3000 ];
+  networking.firewall.allowedUDPPorts = [ 25565 3000 ];
+
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -147,5 +200,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "24.05"; # Did you read the comment?
 }

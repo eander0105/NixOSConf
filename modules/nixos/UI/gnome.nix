@@ -14,9 +14,11 @@
         darktable
         piper
         freecad
+        usb-modeswitch
 
         # Gnome pkgs
         gnome.gnome-tweaks
+        gnome.gnome-terminal
         gnome.adwaita-icon-theme
         gnomeExtensions.appindicator
         gnomeExtensions.gsconnect
@@ -32,7 +34,7 @@
         gnome-tour
       ]) ++ (with pkgs.gnome; [
         cheese # webcam tool
-        gedit # text editor
+        # gedit # text editor
         epiphany # web browser
         geary # email reader
         evince # document viewer
@@ -47,7 +49,9 @@
       ]);
     };
 
-    programs.gnome-terminal.enable = true;
+    programs.gnome-terminal = {
+      enable = true;
+    };
     programs.kdeconnect = {
       enable = true;
       package = pkgs.gnomeExtensions.gsconnect;
@@ -68,6 +72,10 @@
     };
 
     # services.udev.packages = [ pkgs.gnome.gnome-settings-daemon ];
+    # services.udev.extraRules = ''
+    #   ATTR{idVendor}=="046d", ATTR{idProduct}=="c261", RUN+="usb_modeswitch '%b/%k'"
+    # '';
+
     services.ratbagd.enable = true;
 
     systemd.tmpfiles.rules = [
@@ -91,8 +99,10 @@
         settings.greeter.includeAll = true;
       };
       desktopManager.gnome.enable = true;
-      layout = "se";
-      xkbVariant = "";
+      xkb = {
+        layout = "se";
+        variant = "";
+      };
     };
 
     sound.enable = true;
