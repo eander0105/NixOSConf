@@ -187,8 +187,8 @@
   # Open ports in the firewall.
   # 25565 is the default port for Minecraft.
   # 3000 is the default port for Jellyfin.
-  networking.firewall.allowedTCPPorts = [ 25565 3000 ];
-  networking.firewall.allowedUDPPorts = [ 25565 3000 ];
+  networking.firewall.allowedTCPPorts = [ 25565 3000 443 80 8080 8000 ];
+  networking.firewall.allowedUDPPorts = [ 25565 3000 443 80 8080 8000 ];
 
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

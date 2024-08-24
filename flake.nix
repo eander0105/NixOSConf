@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
@@ -16,7 +16,7 @@
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-unstable,
+    unstable,
     nixos-hardware,
     flake-utils,
     home-manager,

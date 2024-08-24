@@ -1,4 +1,4 @@
-{config, ...}:
+{ config, ... }:
 let
   profileUUID = "9e6bced8-89d4-4c52-aead-bbd59cbaad09";
 in {
