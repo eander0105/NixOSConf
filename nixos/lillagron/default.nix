@@ -109,6 +109,8 @@
     docker
     obs-studio
     vlc
+    codeium
+    gcc
 
     jellyfin
     jellyfin-web
@@ -126,7 +128,21 @@
     inputs.nix-gaming.packages.${pkgs.hostPlatform.system}.wine-ge
   ];
 
+
+  # To make codeium work?
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = [];
+
   programs.gamemode.enable = true;
+
+  services.solaar = {
+    enable = true; # Enable the service
+    package = pkgs.solaar; # The package to use
+    window = "hide"; # Show the window on startup (show, *hide*, only [window only])
+    batteryIcons = "regular"; # Which battery icons to use (*regular*, symbolic, solaar)
+    extraArgs = ""; # Extra arguments to pass to solaar on startup
+  };
+
 
   programs.steam = {
     enable = true;
@@ -187,8 +203,8 @@
   # Open ports in the firewall.
   # 25565 is the default port for Minecraft.
   # 3000 is the default port for Jellyfin.
-  networking.firewall.allowedTCPPorts = [ 25565 3000 443 80 8080 8000 ];
-  networking.firewall.allowedUDPPorts = [ 25565 3000 443 80 8080 8000 ];
+  networking.firewall.allowedTCPPorts = [ 25565 3000 443 80 8080 8000 5173 ];
+  networking.firewall.allowedUDPPorts = [ 25565 3000 443 80 8080 8000 5173 ];
 
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

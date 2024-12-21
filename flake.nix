@@ -11,6 +11,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-gaming.url = "github:fufexan/nix-gaming";
+    solaar = {
+      url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -20,6 +24,7 @@
     nixos-hardware,
     flake-utils,
     home-manager,
+    solaar,
     ...
   } @inputs:
     let
@@ -44,7 +49,10 @@
           lillagron = lib.nixosSystem {
             inherit specialArgs;
             system = "x86_64-linux";
-            modules = [ ./nixos/lillagron ];
+            modules = [
+              solaar.nixosModules.default
+              ./nixos/lillagron
+            ];
           };
         };
 

@@ -79,8 +79,8 @@
       unbind-key C-Left
       unbind-key C-Right
 
-      bind c new-window -c
-      bind -n C-t new-window -c
+      bind c new-window
+      bind -n C-t new-window
 
       # statusbar
       set -g status-position bottom
