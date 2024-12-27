@@ -5,21 +5,22 @@
 
       systemPackages = with pkgs; [
         # General pkgs
-        firefox
+        # firefox
         chromium
-        vscode
+        # vscode
         spotify
-        wl-clipboard
-        mangohud
-        darktable
-        piper
-        freecad
-        usb-modeswitch
+        # wl-clipboard
+        # mangohud
+        # darktable
+        # piper
+        # freecad
+        # usb-modeswitch
 
         # Gnome pkgs
         gnome.gnome-tweaks
         gnome.gnome-terminal
         gnome.adwaita-icon-theme
+        gnomeExtensions.blur-my-shell
         gnomeExtensions.appindicator
         gnomeExtensions.gsconnect
         gnomeExtensions.workspace-matrix
@@ -39,7 +40,7 @@
         geary # email reader
         evince # document viewer
         totem # video player
-        pkgs.gnome-console
+        # pkgs.gnome-console
         pkgs.gnome-connections
         gnome-contacts
         gnome-maps
@@ -63,7 +64,7 @@
         {
           settings = {
             "org/gnome/settings-daemon/plugins/media-keys" = {
-              area-screenshot = [ "<Primary><Shift>Print" ];
+              area-screenshot = [ "<Primary><Shift>S" ];
             };
           };
           lockAll = true;
@@ -76,36 +77,43 @@
     #   ATTR{idVendor}=="046d", ATTR{idProduct}=="c261", RUN+="usb_modeswitch '%b/%k'"
     # '';
 
-    services.ratbagd.enable = true;
+    # services.ratbagd.enable = true;
 
     systemd.tmpfiles.rules = [
       "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
     ];
 
-    hardware.opengl = {
+    /* hardware.opengl = {
       driSupport = true;# This is already enabled by default
       driSupport32Bit = true;# For 32 bit applications
       extraPackages = with pkgs; [
         amdvlk
         driversi686Linux.amdvlk
       ];
-    };
+    }; */
 
     services.xserver = {
       enable = true;
-      videoDrivers = [ "amdgpu" ];
+      # videoDrivers = [ "amdgpu" ];
       displayManager.gdm = {
         enable = true;
         settings.greeter.includeAll = true;
       };
-      desktopManager.gnome.enable = true;
+      desktopManager.gnome = {
+        enable = true;
+        # extraGSettingsOverridePackages = [ pkgs.gnome.mutter ];
+        # extraGSettingsOverride = ''
+        #  [org.gnome.mutter]
+        #   experimental-features=['scale-monitor-framebuffer']
+        # '';
+      };
       xkb = {
         layout = "se";
         variant = "";
       };
     };
 
-    sound.enable = true;
+    sound.enable = false;
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
@@ -113,7 +121,8 @@
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-      jack.enable = true;
+      wireplumber.enable = true;
+      # jack.enable = true;
     };
 
   };

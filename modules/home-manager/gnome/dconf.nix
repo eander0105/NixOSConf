@@ -48,6 +48,7 @@ in {
         workspaces-only-on-primary = true;
         dynamic-workspaces = true;
         edge-tiling = true;
+        experimental-features = [ "scale-monitor-framebuffer" ];
       };
       "org/gnome/settings-daemon/plugins/power" = {
         sleep-inactive-ac-timeout = 3600;
