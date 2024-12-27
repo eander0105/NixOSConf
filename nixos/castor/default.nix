@@ -61,6 +61,13 @@
     isNormalUser = true;
     description = "Emil Andersson";
     extraGroups = [ "networkmanager" "wheel" "input" "audio" "docker" ];
+    packages = with pkgs; [
+      (wineWowPackages.full.override {
+        wineRelease = "staging";
+        mingwSupport = true;
+      })
+      winetricks
+    ];
   };
 
   # Allow unfree packages
