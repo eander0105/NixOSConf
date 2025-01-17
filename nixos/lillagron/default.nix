@@ -28,8 +28,27 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_6_6;
+    # kernelPackages = pkgs.linuxPackages_6_6;
+    # Make v4l2loopback kernel module available to NixOS.
+    extraModulePackages = with config.boot.kernelPackages; [
+      v4l2loopback
+    ];
+    # Activate kernel module(s).
+    kernelModules = [
+      # Virtual camera.
+      "v4l2loopback"
+      # Virtual Microphone. Custom DroidCam v4l2loopback driver needed for audio.
+      "snd-aloop"
+    ];
+    extraModprobeConfig = ''
+      # exclusive_caps: Skype, Zoom, Teams etc. will only show device when actually streaming
+      # card_label: Name of virtual camera, how it'll show up in Skype, Zoom, Teams
+      # https://github.com/umlaeute/v4l2loopback
+      options v4l2loopback exclusive_caps=1 card_label="Virtual Camera"
+    '';
   };
+  security.polkit.enable = true;
+
 
   # TODO: rename to "lillagron"
   networking = {
@@ -98,19 +117,28 @@
     dconf
     appimage-run
 
-    vesktop
     discord
-    armcord
+    legcord
 
     jre8
     jdk8
     python3
     nodejs
     docker
-    obs-studio
+    docker-compose
     vlc
     codeium
     gcc
+    go
+    gnumake
+
+    droidcam
+    v4l-utils
+    (wrapOBS {
+      plugins = with obs-studio-plugins; [
+        droidcam-obs
+      ];
+    })
 
     jellyfin
     jellyfin-web
@@ -128,6 +156,11 @@
     inputs.nix-gaming.packages.${pkgs.hostPlatform.system}.wine-ge
   ];
 
+  environment.sessionVariables = {
+    GSK_RENDERER = "gl";
+  };
+
+  programs.java.enable = true;
 
   # To make codeium work?
   programs.nix-ld.enable = true;
@@ -216,5 +249,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 }

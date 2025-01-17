@@ -2,12 +2,12 @@
   description = "eander0105 nix configuration flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-gaming.url = "github:fufexan/nix-gaming";
@@ -45,7 +45,7 @@
       nixosConfigurations =
         let
           specialArgs = { inherit inputs outputs; };
-        in{
+        in {
           lillagron = lib.nixosSystem {
             inherit specialArgs;
             system = "x86_64-linux";
@@ -55,7 +55,6 @@
             ];
           };
         };
-
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
     };
 }
