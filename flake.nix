@@ -39,8 +39,8 @@
         }
       );
 
-      nixosModules = import ./modules/nixos;
-      homeManagerModules = import ./modules/home-manager;
+      nixosModules = import ./modules;
+      homeManagerModules = import ./home-manager/modules;
 
       nixosConfigurations =
         let
@@ -51,10 +51,18 @@
             system = "x86_64-linux";
             modules = [
               solaar.nixosModules.default
-              ./nixos/lillagron
+              ./hosts/lillagron
             ];
           };
         };
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+
+      # Add a default package
+      defaultPackage = forAllSystems (system: legacyPackages.${system}.alejandra);
+
+      # Add a development shell
+      devShell = forAllSystems (system: legacyPackages.${system}.mkShell {
+        buildInputs = with legacyPackages.${system}; [ alejandra git ];
+      });
     };
 }

@@ -1,8 +1,22 @@
 { inputs, outputs, config, pkgs, ... } :
 {
   config = {
-    environment = {
 
+    services.xserver = {
+      enable = true;
+      videoDrivers = [ "amdgpu" ];
+      displayManager.gdm = {
+        enable = true;
+        settings.greeter.includeAll = true;
+      };
+      desktopManager.gnome.enable = true;
+      xkb = {
+        layout = "se";
+        variant = "";
+      };
+    };
+
+    environment = {
       systemPackages = with pkgs; [
         # General pkgs
         firefox
@@ -38,6 +52,8 @@
         geary # email reader
         evince # document viewer
         totem # video player
+        yelp # Help view
+
         pkgs.gnome-console
         pkgs.gnome-connections
         gnome-contacts
@@ -48,27 +64,30 @@
       ]);
     };
 
-    programs.gnome-terminal = {
-      enable = true;
-    };
-    programs.kdeconnect = {
+    /* programs.kdeconnect = {
       enable = true;
       package = pkgs.gnomeExtensions.gsconnect;
+    }; */
+    programs = {
+      gnome-terminal = {
+        enable = true;
+      };
+
+      dconf = {
+        enable = true;
+        profiles.user.databases = [
+          {
+            settings = {
+              "org/gnome/settings-daemon/plugins/media-keys" = {
+                area-screenshot = [ "<Primary><Shift>Print" ];
+              };
+            };
+            lockAll = true;
+          }
+        ];
+      };
     };
 
-    programs.dconf = {
-      enable = true;
-      profiles.user.databases = [
-        {
-          settings = {
-            "org/gnome/settings-daemon/plugins/media-keys" = {
-              area-screenshot = [ "<Primary><Shift>Print" ];
-            };
-          };
-          lockAll = true;
-        }
-      ];
-    };
 
     # services.udev.packages = [ pkgs.gnome.gnome-settings-daemon ];
     # services.udev.extraRules = ''
@@ -82,25 +101,11 @@
     ];
 
     hardware.graphics = {
-      enable32Bit = true;# For 32 bit applications
+      enable32Bit = true; # For 32 bit applications
       extraPackages = with pkgs; [
         amdvlk
         driversi686Linux.amdvlk
       ];
-    };
-
-    services.xserver = {
-      enable = true;
-      videoDrivers = [ "amdgpu" ];
-      displayManager.gdm = {
-        enable = true;
-        settings.greeter.includeAll = true;
-      };
-      desktopManager.gnome.enable = true;
-      xkb = {
-        layout = "se";
-        variant = "";
-      };
     };
 
     hardware.pulseaudio.enable = false;
