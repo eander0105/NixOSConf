@@ -11,6 +11,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-gaming.url = "github:fufexan/nix-gaming";
+    solaar = {
+      url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -20,6 +24,7 @@
     nixos-hardware,
     flake-utils,
     home-manager,
+    solaar,
     ...
   } @inputs:
     let
@@ -34,17 +39,20 @@
         }
       );
 
-      nixosModules = import ./modules/nixos;
-      homeManagerModules = import ./modules/home-manager;
+      nixosModules = import ./modules;
+      homeManagerModules = import ./home-manager/modules;
 
       nixosConfigurations =
         let
           specialArgs = { inherit inputs outputs; };
-        in{
+        in {
           lillagron = lib.nixosSystem {
             inherit specialArgs;
             system = "x86_64-linux";
-            modules = [ ./nixos/lillagron ];
+            modules = [
+              solaar.nixosModules.default
+              ./hosts/lillagron
+            ];
           };
           castor = lib.nixosSystem {
             inherit specialArgs;
@@ -52,7 +60,14 @@
             modules = [ ./nixos/castor ];
           };
         };
-
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+
+      # Add a default package
+      defaultPackage = forAllSystems (system: legacyPackages.${system}.alejandra);
+
+      # Add a development shell
+      devShell = forAllSystems (system: legacyPackages.${system}.mkShell {
+        buildInputs = with legacyPackages.${system}; [ alejandra git ];
+      });
     };
 }

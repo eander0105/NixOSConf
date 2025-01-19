@@ -6,7 +6,7 @@
     inputs.nixos-hardware.nixosModules.common-gpu-amd
     inputs.home-manager.nixosModules.home-manager
     ./hardware-configuration.nix
-    ../../modules/nixos/UI/gnome.nix
+    ../../modules/UI/gnome.nix
     ./home.nix
   ];
 
@@ -28,8 +28,27 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_6_6;
+    # kernelPackages = pkgs.linuxPackages_6_6;
+    # Make v4l2loopback kernel module available to NixOS.
+    extraModulePackages = with config.boot.kernelPackages; [
+      v4l2loopback
+    ];
+    # Activate kernel module(s).
+    kernelModules = [
+      # Virtual camera.
+      "v4l2loopback"
+      # Virtual Microphone. Custom DroidCam v4l2loopback driver needed for audio.
+      "snd-aloop"
+    ];
+    extraModprobeConfig = ''
+      # exclusive_caps: Skype, Zoom, Teams etc. will only show device when actually streaming
+      # card_label: Name of virtual camera, how it'll show up in Skype, Zoom, Teams
+      # https://github.com/umlaeute/v4l2loopback
+      options v4l2loopback exclusive_caps=1 card_label="Virtual Camera"
+    '';
   };
+  security.polkit.enable = true;
+
 
   # TODO: rename to "lillagron"
   networking = {
@@ -51,18 +70,18 @@
   time.timeZone = "Europe/Stockholm";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "sv_SE.UTF-8";
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
+    # LC_ADDRESS = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
+    # LC_IDENTIFICATION = "en_US.UTF-8";
+    # LC_MEASUREMENT = "en_US.UTF-8";
+    # LC_MONETARY = "en_US.UTF-8";
+    # LC_NAME = "en_US.UTF-8";
+    # LC_NUMERIC = "en_US.UTF-8";
+    # LC_PAPER = "en_US.UTF-8";
+    # LC_TELEPHONE = "en_US.UTF-8";
+    # LC_TIME = "en_US.UTF-8";
   };
 
   # Configure console keymap
@@ -98,17 +117,28 @@
     dconf
     appimage-run
 
-    vesktop
     discord
-    armcord
+    legcord
 
     jre8
     jdk8
     python3
     nodejs
     docker
-    obs-studio
+    docker-compose
     vlc
+    codeium
+    gcc
+    go
+    gnumake
+
+    droidcam
+    v4l-utils
+    (wrapOBS {
+      plugins = with obs-studio-plugins; [
+        droidcam-obs
+      ];
+    })
 
     jellyfin
     jellyfin-web
@@ -126,7 +156,26 @@
     inputs.nix-gaming.packages.${pkgs.hostPlatform.system}.wine-ge
   ];
 
+  environment.sessionVariables = {
+    GSK_RENDERER = "gl";
+  };
+
+  programs.java.enable = true;
+
+  # To make codeium work?
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = [];
+
   programs.gamemode.enable = true;
+
+  services.solaar = {
+    enable = true; # Enable the service
+    package = pkgs.solaar; # The package to use
+    window = "hide"; # Show the window on startup (show, *hide*, only [window only])
+    batteryIcons = "regular"; # Which battery icons to use (*regular*, symbolic, solaar)
+    extraArgs = ""; # Extra arguments to pass to solaar on startup
+  };
+
 
   programs.steam = {
     enable = true;
@@ -187,8 +236,8 @@
   # Open ports in the firewall.
   # 25565 is the default port for Minecraft.
   # 3000 is the default port for Jellyfin.
-  networking.firewall.allowedTCPPorts = [ 25565 3000 443 80 8080 8000 ];
-  networking.firewall.allowedUDPPorts = [ 25565 3000 443 80 8080 8000 ];
+  networking.firewall.allowedTCPPorts = [ 25565 3000 443 80 8080 8000 5173 ];
+  networking.firewall.allowedUDPPorts = [ 25565 3000 443 80 8080 8000 5173 ];
 
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

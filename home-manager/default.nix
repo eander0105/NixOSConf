@@ -9,9 +9,10 @@
 
 {
   imports = [
-    ../modules/home-manager/gnome
-    ../modules/home-manager/git.nix
-    ../modules/home-manager/tmux.nix
+    ./modules/gnome
+    ./modules/git.nix
+    ./modules/tmux.nix
+    ./modules/nvim.nix
   ];
 
   nixpkgs.config = {
