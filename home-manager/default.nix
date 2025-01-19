@@ -12,6 +12,7 @@
     ./modules/gnome
     ./modules/git.nix
     ./modules/tmux.nix
+    ./modules/nvim.nix
   ];
 
   nixpkgs.config = {
