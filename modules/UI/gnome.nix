@@ -26,16 +26,16 @@
     environment = {
       systemPackages = with pkgs; [
         # General pkgs
-        firefox
+        # firefox
         chromium
         # vscode
         spotify
         wl-clipboard
         # mangohud
         # darktable
-        piper
-        freecad
-        usb-modeswitch
+        # piper
+        # freecad
+        # usb-modeswitch
 
         # Gnome pkgs
         gnome-tweaks
