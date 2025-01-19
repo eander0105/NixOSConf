@@ -18,7 +18,7 @@
     options = "--delete-older-than 14d";
   };
 
-  services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+  services.xserver.videoDrivers = [ "modesetting" ];
 
   # Bootloader
   boot = {
@@ -30,7 +30,11 @@
 
   networking = {
     hostName = "castor";
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      appendNameservers = [ "8.8.8.8" ];
+    };
+
     # wireless.enable = true;
     extraHosts = ''
       127.0.0.1 nixos castor
@@ -92,8 +96,15 @@
     mkcert
     nssTools
 
+    go
+    # Ebitengiene deps
+    gcc
     
   ];
+  
+  environment.sessionVariables = {
+    GSK_RENDERER="gl";
+  };
 
   services.teamviewer.enable = true;
 
@@ -109,5 +120,5 @@
   networking.firewall.enable = false;
 
   ## 
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
 }

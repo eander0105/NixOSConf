@@ -17,9 +17,9 @@
         # usb-modeswitch
 
         # Gnome pkgs
-        gnome.gnome-tweaks
-        gnome.gnome-terminal
-        gnome.adwaita-icon-theme
+        gnome-tweaks
+        gnome-terminal
+        adwaita-icon-theme
         gnomeExtensions.blur-my-shell
         gnomeExtensions.appindicator
         gnomeExtensions.gsconnect
@@ -33,7 +33,6 @@
       gnome.excludePackages = (with pkgs; [
         gnome-photos
         gnome-tour
-      ]) ++ (with pkgs.gnome; [
         cheese # webcam tool
         # gedit # text editor
         epiphany # web browser
@@ -83,14 +82,13 @@
       "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
     ];
 
-    /* hardware.opengl = {
-      driSupport = true;# This is already enabled by default
-      driSupport32Bit = true;# For 32 bit applications
+    hardware.graphics = {
+      enable32Bit = true; # For 32 bit applications
       extraPackages = with pkgs; [
         amdvlk
         driversi686Linux.amdvlk
       ];
-    }; */
+    };
 
     services.xserver = {
       enable = true;
@@ -113,7 +111,6 @@
       };
     };
 
-    sound.enable = false;
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
