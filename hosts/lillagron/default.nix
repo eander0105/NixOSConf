@@ -132,6 +132,8 @@
     go
     gnumake
 
+    bambu-studio
+
     droidcam
     v4l-utils
     (wrapOBS {

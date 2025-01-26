@@ -7,10 +7,10 @@
   in {
     enable = true;
 
-    viAlias = true;
-    vimAlias = true;
-    vimdiffAlias = true;
+    # viAlias = true;
+    # vimAlias = true;
+    # vimdiffAlias = true;
     
-    lsp.options = toluaFile ./lsp.lua;
+    # lsp.options = toluaFile ./lsp.lua;
   };
 }
