@@ -4,12 +4,19 @@
 
     services.xserver = {
       enable = true;
-      videoDrivers = [ "amdgpu" ];
+      # videoDrivers = [ "amdgpu" ];
       displayManager.gdm = {
         enable = true;
         settings.greeter.includeAll = true;
       };
-      desktopManager.gnome.enable = true;
+      desktopManager.gnome = {
+        enable = true;
+        # extraGSettingsOverridePackages = [ pkgs.gnome.mutter ];
+        # extraGSettingsOverride = ''
+        #  [org.gnome.mutter]
+        #   experimental-features=['scale-monitor-framebuffer']
+        # '';
+      };
       xkb = {
         layout = "se";
         variant = "";
@@ -19,16 +26,16 @@
     environment = {
       systemPackages = with pkgs; [
         # General pkgs
-        firefox
+        # firefox
         chromium
-        vscode
+        # vscode
         spotify
         wl-clipboard
-        mangohud
-        darktable
-        piper
-        freecad
-        usb-modeswitch
+        # mangohud
+        # darktable
+        # piper
+        # freecad
+        # usb-modeswitch
 
         # Gnome pkgs
         gnome-tweaks
@@ -115,7 +122,8 @@
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-      jack.enable = true;
+      wireplumber.enable = true;
+      # jack.enable = true;
     };
 
   };

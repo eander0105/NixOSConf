@@ -54,6 +54,11 @@
               ./hosts/lillagron
             ];
           };
+          castor = lib.nixosSystem {
+            inherit specialArgs;
+            system = "x86_64-linux";
+            modules = [ ./nixos/castor ];
+          };
         };
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
