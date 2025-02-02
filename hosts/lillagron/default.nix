@@ -206,10 +206,10 @@
 
   virtualisation.docker = {
     enable = true;
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
-    };
+    # rootless = {
+    #   enable = true;
+    #   setSocketVariable = true;
+    # };
   };
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -238,11 +238,10 @@
   # Open ports in the firewall.
   # 25565 is the default port for Minecraft.
   # 3000 is the default port for Jellyfin.
-  networking.firewall.allowedTCPPorts = [ 25565 3000 443 80 8080 8000 5173 ];
-  networking.firewall.allowedUDPPorts = [ 25565 3000 443 80 8080 8000 5173 ];
-
+  # networking.firewall.allowedTCPPorts = [ 25565 3000 443 80 8080 8000 5173 ];
+  # networking.firewall.allowedUDPPorts = [ 25565 3000 443 80 8080 8000 5173 ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
 
   # This value determines the NixOS release from which the default
