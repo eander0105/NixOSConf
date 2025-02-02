@@ -15,6 +15,8 @@
     ./modules/nvim.nix
 
     ./modules/dev/java.nix
+
+    ./modules/game/battle.net.nix
   ];
 
   nixpkgs.config = {
