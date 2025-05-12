@@ -26,11 +26,16 @@
     environment = {
       systemPackages = with pkgs; [
         # General pkgs
-        # firefox
+        firefox
         chromium
-        # vscode
+        signal-desktop
         spotify
         wl-clipboard
+
+        vscode
+        neovide
+
+        ## Refactor this to a separate file
         # mangohud
         # darktable
         # piper

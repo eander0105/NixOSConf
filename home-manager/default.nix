@@ -13,6 +13,8 @@
     ./modules/git.nix
     ./modules/tmux.nix
     ./modules/nvim.nix
+    ./modules/dev/java.nix
+    ./modules/obsidian.nix
   ];
 
   nixpkgs.config = {

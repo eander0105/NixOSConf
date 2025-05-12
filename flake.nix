@@ -57,7 +57,7 @@
           castor = lib.nixosSystem {
             inherit specialArgs;
             system = "x86_64-linux";
-            modules = [ ./nixos/castor ];
+            modules = [ ./hosts/castor ];
           };
         };
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);

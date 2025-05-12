@@ -4,7 +4,7 @@
   imports = [
     inputs.home-manager.nixosModules.home-manager
     ./hardware-configuration.nix
-    ../../modules/nixos/UI/gnome.nix
+    ../../modules/UI/gnome.nix
     ./home.nix
   ];
 
@@ -77,29 +77,28 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Firefox
-  programs.firefox.enable = true;
-
   services.envfs.enable = true;
 
   # System-wide packages
   environment.systemPackages = with pkgs; [
     git
     vim
-    vscode
 
     docker
     docker-compose
     gnumake
-    python311
     nodejs
     mkcert
     nssTools
 
+    python312
+    python312Packages.sqlalchemy
+
     go
     # Ebitengiene deps
     gcc
-    
+
+    discord
   ];
   
   environment.sessionVariables = {

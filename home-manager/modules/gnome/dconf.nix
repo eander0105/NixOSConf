@@ -40,9 +40,9 @@ in {
       "org/gnome/desktop/wm/preferences".num-workspaces = 6;
       "org/gnome/shell/app-switcher".current-workspace-only = false;
       "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
         enable-hot-corners = false;
-        gtk-theme = "Adwaita-dark";
+        color-scheme = "prefer-dark";
+        gtk-theme = "adw-gtk3-dark";
       };
       "org/gnome/mutter" = {
         workspaces-only-on-primary = true;

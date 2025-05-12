@@ -1,6 +1,6 @@
 { pkgs, config, inputs, ... }:
 {
-  programs.neovim = 
+  programs.neovim =
   let
     toLua = str: "lua << EOF\n${str}\nEOF\n";
     toLuaFile = path: "lua << EOF\n${builtins.readFile path}\nEOF\n";
@@ -11,6 +11,6 @@
     vimAlias = true;
     vimdiffAlias = true;
     
-    lsp.options = toluaFile ./lsp.lua;
+    # lsp.options = toluaFile ./lsp.lua;
   };
 }
