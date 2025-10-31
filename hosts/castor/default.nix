@@ -84,12 +84,18 @@
     git
     vim
 
+    ghostty
+    jetbrains-mono
+
+    wofi
+
     docker
     docker-compose
     gnumake
     nodejs
     mkcert
     nssTools
+    android-studio
 
     python312
     python312Packages.sqlalchemy
@@ -100,12 +106,27 @@
 
     discord
   ];
-  
+
   environment.sessionVariables = {
     GSK_RENDERER="gl";
   };
 
+  # programs.wofi.enable = true;
+
+  services.flatpak.enable = true;
   services.teamviewer.enable = true;
+
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if ((action.id == "org.freedesktop.login1.suspend" ||
+           action.id == "org.freedesktop.login1.hibernate" ||
+           action.id == "org.freedesktop.login1.suspend-multiple-sessions" ||
+           action.id == "org.freedesktop.login1.hibernate-multiple-sessions") &&
+          subject.isInGroup("wheel")) {
+        return polkit.Result.YES;
+      }
+    });
+  '';
 
   virtualisation.docker = {
     enable = true;

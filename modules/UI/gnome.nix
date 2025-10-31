@@ -17,6 +17,12 @@
         #   experimental-features=['scale-monitor-framebuffer']
         # '';
       };
+
+      # TODO: Add to hyprland later
+      # windowManager.hyprland = {
+      #   enable = true;
+      # };
+
       xkb = {
         layout = "se";
         variant = "";
@@ -97,6 +103,11 @@
             lockAll = true;
           }
         ];
+      };
+
+      hyprland = {
+        enable = true;
+        xwayland.enable = true;
       };
     };
 
