@@ -117,6 +117,12 @@
     dconf
     appimage-run
 
+    flatpak
+    # consider orca-slicer
+    # bambu-studio # installed with flatpak instead, current nixos version is broken
+
+    firefox
+
     discord
     legcord
 
@@ -132,7 +138,9 @@
     go
     gnumake
 
-    bambu-studio
+    thonny
+
+    openscad
 
     droidcam
     v4l-utils
@@ -145,6 +153,8 @@
     jellyfin
     jellyfin-web
     jellyfin-ffmpeg
+
+    lact
 
     # Gaming
     steam
@@ -170,6 +180,15 @@
 
   programs.gamemode.enable = true;
 
+  services.flatpak.enable = true;
+
+  services.mullvad-vpn = {
+    enable = true;
+    package = pkgs.mullvad-vpn;
+  };
+
+  services.resolved.enable = true;
+
   services.solaar = {
     enable = true; # Enable the service
     package = pkgs.solaar; # The package to use
@@ -178,6 +197,15 @@
     extraArgs = ""; # Extra arguments to pass to solaar on startup
   };
 
+  systemd.services.lact = {
+    description = "AMDGPU Control Daemon";
+    after = ["multi-user.target"];
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      ExecStart = "${pkgs.lact}/bin/lact daemon";
+    };
+    enable = true;
+  };
 
   programs.steam = {
     enable = true;

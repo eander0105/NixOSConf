@@ -15,6 +15,7 @@
       url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nvf.url = "github:notashelf/nvf";
   };
 
   outputs = {
@@ -50,8 +51,9 @@
             inherit specialArgs;
             system = "x86_64-linux";
             modules = [
-              solaar.nixosModules.default
               ./hosts/lillagron
+              # nvf.nixosModules.default
+              solaar.nixosModules.default
             ];
           };
           castor = lib.nixosSystem {
