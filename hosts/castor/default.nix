@@ -4,7 +4,7 @@
   imports = [
     inputs.home-manager.nixosModules.home-manager
     ./hardware-configuration.nix
-    ../../modules/nixos/UI/gnome.nix
+    ../../modules/UI/gnome.nix
     ./home.nix
   ];
 
@@ -77,36 +77,56 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Firefox
-  programs.firefox.enable = true;
-
   services.envfs.enable = true;
 
   # System-wide packages
   environment.systemPackages = with pkgs; [
     git
     vim
-    vscode
+
+    ghostty
+    jetbrains-mono
+
+    wofi
 
     docker
     docker-compose
     gnumake
-    python311
     nodejs
     mkcert
     nssTools
+    android-studio
+
+    python312
+    python312Packages.sqlalchemy
 
     go
     # Ebitengiene deps
     gcc
-    
+
+    discord
   ];
-  
+
   environment.sessionVariables = {
     GSK_RENDERER="gl";
   };
 
+  # programs.wofi.enable = true;
+
+  services.flatpak.enable = true;
   services.teamviewer.enable = true;
+
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if ((action.id == "org.freedesktop.login1.suspend" ||
+           action.id == "org.freedesktop.login1.hibernate" ||
+           action.id == "org.freedesktop.login1.suspend-multiple-sessions" ||
+           action.id == "org.freedesktop.login1.hibernate-multiple-sessions") &&
+          subject.isInGroup("wheel")) {
+        return polkit.Result.YES;
+      }
+    });
+  '';
 
   virtualisation.docker = {
     enable = true;

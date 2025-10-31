@@ -17,6 +17,12 @@
         #   experimental-features=['scale-monitor-framebuffer']
         # '';
       };
+
+      # TODO: Add to hyprland later
+      # windowManager.hyprland = {
+      #   enable = true;
+      # };
+
       xkb = {
         layout = "se";
         variant = "";
@@ -26,11 +32,16 @@
     environment = {
       systemPackages = with pkgs; [
         # General pkgs
-        # firefox
+        firefox
         chromium
-        # vscode
+        signal-desktop
         spotify
         wl-clipboard
+
+        vscode
+        neovide
+
+        ## Refactor this to a separate file
         # mangohud
         # darktable
         # piper
@@ -92,6 +103,11 @@
             lockAll = true;
           }
         ];
+      };
+
+      hyprland = {
+        enable = true;
+        xwayland.enable = true;
       };
     };
 
