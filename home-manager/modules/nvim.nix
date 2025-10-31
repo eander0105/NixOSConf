@@ -1,16 +1,17 @@
 { pkgs, config, inputs, ... }:
 {
-  programs.neovim =
-  let
-    toLua = str: "lua << EOF\n${str}\nEOF\n";
-    toLuaFile = path: "lua << EOF\n${builtins.readFile path}\nEOF\n";
-  in {
+
+  programs.neovim = {
     enable = true;
 
     # viAlias = true;
     # vimAlias = true;
     # vimdiffAlias = true;
     
+    extraPackages = with pkgs; [
+      ripgrep   # needed for :Telescope live_grep
+      fd        # speeds up :Telescope find_files
+    ];
     # lsp.options = toluaFile ./lsp.lua;
   };
 }

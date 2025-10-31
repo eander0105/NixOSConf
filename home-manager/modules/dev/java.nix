@@ -1,11 +1,9 @@
 { pkgs, ... }:
 
 {
-  programs.java = {
-    enable = true;
-  };
-  home.packages = with pkgs; [
-    jdk
-    maven
-  ];
+    programs.java.enable = true;
+    home.packages = with pkgs; [
+        jdk
+        maven
+    ];
 }

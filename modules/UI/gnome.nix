@@ -17,6 +17,12 @@
         #   experimental-features=['scale-monitor-framebuffer']
         # '';
       };
+
+      # TODO: Add to hyprland later
+      # windowManager.hyprland = {
+      #   enable = true;
+      # };
+
       xkb = {
         layout = "se";
         variant = "";
@@ -26,13 +32,19 @@
     environment = {
       systemPackages = with pkgs; [
         # General pkgs
-        # firefox
+        firefox
         chromium
         vscode
         spotify
         wl-clipboard
         mangohud
         darktable
+        signal-desktop
+        neovide
+
+        ## Refactor this to a separate file
+        # mangohud
+        # darktable
         # piper
         freecad
         usb-modeswitch
@@ -97,6 +109,11 @@
             lockAll = true;
           }
         ];
+      };
+
+      hyprland = {
+        enable = true;
+        xwayland.enable = true;
       };
     };
 
