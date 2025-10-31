@@ -2,12 +2,12 @@
   description = "eander0105 nix configuration flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-gaming.url = "github:fufexan/nix-gaming";
@@ -15,6 +15,7 @@
       url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nvf.url = "github:notashelf/nvf";
   };
 
   outputs = {
@@ -50,8 +51,9 @@
             inherit specialArgs;
             system = "x86_64-linux";
             modules = [
-              solaar.nixosModules.default
               ./hosts/lillagron
+              # nvf.nixosModules.default
+              solaar.nixosModules.default
             ];
           };
           castor = lib.nixosSystem {

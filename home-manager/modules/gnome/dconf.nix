@@ -183,6 +183,11 @@ in {
         command = "kitty";
         name = "Terminal (kitty)";
       };
+      # "ord/gnome/settings-daemon/plugins/media-keys/customkeybindings/custom1" = {
+      #   binding = "<Super>Space";
+      #   command = "wofi --show drun";
+      #   name = "Wofi";
+      # };
     };
   };
 }

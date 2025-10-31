@@ -28,14 +28,19 @@
         # General pkgs
         # firefox
         chromium
-        # vscode
+        vscode
         spotify
         wl-clipboard
-        # mangohud
-        # darktable
+        mangohud
+        darktable
         # piper
-        # freecad
-        # usb-modeswitch
+        freecad
+        usb-modeswitch
+        lact
+
+        wofi
+        ghostty
+        jetbrains-mono
 
         # Gnome pkgs
         gnome-tweaks
@@ -112,6 +117,19 @@
       extraPackages = with pkgs; [
         amdvlk
         driversi686Linux.amdvlk
+
+        rocmPackages.clr.icd
+
+        # Jellyfin
+        /* intel-media-driver
+        intel-vaapi-driver
+        vaapiVdpau
+        intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
+        # OpenCL support for intel CPUs before 12th gen
+        # see: https://github.com/NixOS/nixpkgs/issues/356535
+        # intel-compute-runtime-legacy1
+        vpl-gpu-rt # QSV on 11th gen or newer
+        intel-media-sdk # QSV up to 11th gen */
       ];
     };
 
