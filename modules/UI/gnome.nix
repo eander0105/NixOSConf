@@ -1,32 +1,28 @@
 { inputs, outputs, config, pkgs, ... } :
+let
+  unstable = inputs.unstable.legacyPackages.${pkgs.system};
+in
 {
   config = {
-
     services.xserver = {
       enable = true;
-      # videoDrivers = [ "amdgpu" ];
-      displayManager.gdm = {
-        enable = true;
-        settings.greeter.includeAll = true;
-      };
-      desktopManager.gnome = {
-        enable = true;
-        # extraGSettingsOverridePackages = [ pkgs.gnome.mutter ];
-        # extraGSettingsOverride = ''
-        #  [org.gnome.mutter]
-        #   experimental-features=['scale-monitor-framebuffer']
-        # '';
-      };
+    };
+    services.displayManager.gdm = {
+      enable = true;
+      settings.greeter.includeAll = true;
+    };
+    services.desktopManager.gnome = {
+      enable = true;
+    };
 
-      # TODO: Add to hyprland later
-      # windowManager.hyprland = {
-      #   enable = true;
-      # };
+    # TODO: Add to hyprland later
+    # windowManager.hyprland = {
+    #   enable = true;
+    # };
 
-      xkb = {
-        layout = "se";
-        variant = "";
-      };
+    services.xserver.xkb = {
+      layout = "se";
+      variant = "";
     };
 
     environment = {
@@ -88,10 +84,6 @@
       ]);
     };
 
-    /* programs.kdeconnect = {
-      enable = true;
-      package = pkgs.gnomeExtensions.gsconnect;
-    }; */
     programs = {
       gnome-terminal = {
         enable = true;
@@ -118,11 +110,6 @@
     };
 
 
-    # services.udev.packages = [ pkgs.gnome.gnome-settings-daemon ];
-    # services.udev.extraRules = ''
-    #   ATTR{idVendor}=="046d", ATTR{idProduct}=="c261", RUN+="usb_modeswitch '%b/%k'"
-    # '';
-
     services.ratbagd.enable = true;
 
     systemd.tmpfiles.rules = [
@@ -132,25 +119,11 @@
     hardware.graphics = {
       enable32Bit = true; # For 32 bit applications
       extraPackages = with pkgs; [
-        amdvlk
-        driversi686Linux.amdvlk
-
         rocmPackages.clr.icd
-
-        # Jellyfin
-        /* intel-media-driver
-        intel-vaapi-driver
-        vaapiVdpau
-        intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
-        # OpenCL support for intel CPUs before 12th gen
-        # see: https://github.com/NixOS/nixpkgs/issues/356535
-        # intel-compute-runtime-legacy1
-        vpl-gpu-rt # QSV on 11th gen or newer
-        intel-media-sdk # QSV up to 11th gen */
       ];
     };
 
-    hardware.pulseaudio.enable = false;
+    services.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
       enable = true;
