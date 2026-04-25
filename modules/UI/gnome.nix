@@ -1,6 +1,6 @@
 { inputs, outputs, config, pkgs, ... } :
 let
-  unstable = inputs.unstable.legacyPackages.${pkgs.system};
+  unstable = outputs.legacyPackages.${pkgs.system}.unstable;
 in
 {
   config = {
@@ -30,7 +30,7 @@ in
         # General pkgs
         firefox
         chromium
-        vscode
+        unstable.vscode
         spotify
         wl-clipboard
         mangohud
@@ -103,10 +103,6 @@ in
         ];
       };
 
-      hyprland = {
-        enable = true;
-        xwayland.enable = true;
-      };
     };
 
 

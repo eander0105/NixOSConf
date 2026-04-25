@@ -42,8 +42,7 @@
           inherit system;
           config.allowUnfree = true;
         };
-      }
-      );
+      });
 
       nixosModules = import ./modules;
       homeManagerModules = import ./home-manager/modules;
@@ -67,6 +66,7 @@
             modules = [ ./hosts/castor ];
           };
         };
+
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
       # Add a default package
