@@ -1,6 +1,6 @@
 { inputs, outputs, config, pkgs, ... } :
 let
-  unstable = outputs.legacyPackages.${pkgs.system}.unstable;
+  unstable = outputs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.unstable;
 in
 {
   config = {

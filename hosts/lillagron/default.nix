@@ -7,6 +7,7 @@
     inputs.home-manager.nixosModules.home-manager
     ./hardware-configuration.nix
     ../../modules/UI/gnome.nix
+    # ../../modules/UI/hyprland.nix
     ./home.nix
   ];
 
@@ -95,13 +96,6 @@
     isNormalUser = true;
     description = "Emil Andersson";
     extraGroups = [ "networkmanager" "wheel" "input" "audio" "docker" ];
-    packages = with pkgs; [ 
-      (wineWowPackages.full.override {
-        wineRelease = "staging";
-        mingwSupport = true;
-      })
-      winetricks
-    ];
   };
 
   # Allow unfree packages
@@ -116,6 +110,8 @@
     kitty
     dconf
     appimage-run
+
+    qbittorrent
 
     flatpak
     # consider orca-slicer
@@ -138,8 +134,6 @@
     go
     gnumake
 
-    thonny
-
     openscad
 
     droidcam
@@ -150,10 +144,6 @@
       ];
     })
 
-    jellyfin
-    jellyfin-web
-    jellyfin-ffmpeg
-
     lact
 
     # Gaming
@@ -162,10 +152,8 @@
     prismlauncher # super duper minecraft launcher
     # proton-ge-bin
 
-    wineWowPackages.stable
-    wineWowPackages.waylandFull
     winetricks
-    inputs.nix-gaming.packages.${pkgs.hostPlatform.system}.wine-ge
+    inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.wine-ge
   ];
 
   environment.sessionVariables = {
@@ -181,6 +169,10 @@
   programs.gamemode.enable = true;
 
   services.flatpak.enable = true;
+
+  services.tailscale = {
+    enable = true;
+  };
 
   services.mullvad-vpn = {
     enable = true;
@@ -252,12 +244,6 @@
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
-
-  services.jellyfin = {
-    enable = true;
-    openFirewall = true;
-  };
-
 
   services.devmon.enable = true;
   services.gvfs.enable = true;

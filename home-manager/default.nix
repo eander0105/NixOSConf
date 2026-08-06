@@ -16,7 +16,7 @@
     ./modules/dev/java.nix
     ./modules/obsidian.nix
 
-    ./modules/game/battle.net.nix
+    # ./modules/game/battle.net.nix
   ];
 
   nixpkgs.config = {
